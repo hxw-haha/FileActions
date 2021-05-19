@@ -28,7 +28,6 @@ abstract class BaseActivity : AppCompatActivity(), IBase {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         windowLoadAttr()
-//        setContentView(layoutId())
         mViewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         initViews()
         initData(savedInstanceState)
