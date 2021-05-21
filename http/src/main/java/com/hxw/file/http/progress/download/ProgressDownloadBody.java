@@ -1,5 +1,6 @@
 package com.hxw.file.http.progress.download;
 
+import com.hxw.file.http.progress.IProgressListener;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class ProgressDownloadBody extends ResponseBody {
     //实际的待包装响应体
     private final ResponseBody responseBody;
     //进度回调接口
-    private final ProgressDownloadListener progressListener;
+    private final IProgressListener progressListener;
     //包装完成的BufferedSource
     private BufferedSource bufferedSource;
 
@@ -28,7 +29,7 @@ public class ProgressDownloadBody extends ResponseBody {
      * @param responseBody     待包装的响应体
      * @param progressListener 回调接口
      */
-    public ProgressDownloadBody(ResponseBody responseBody, ProgressDownloadListener progressListener) {
+    public ProgressDownloadBody(ResponseBody responseBody, IProgressListener progressListener) {
         this.responseBody = responseBody;
         this.progressListener = progressListener;
     }
@@ -86,8 +87,8 @@ public class ProgressDownloadBody extends ResponseBody {
                 //增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
                 //回调，如果contentLength()不知道长度，会返回-1
-                if(progressListener != null){
-                    progressListener.onResponseProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
+                if (progressListener != null) {
+                    progressListener.onProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
                 }
                 return bytesRead;
             }

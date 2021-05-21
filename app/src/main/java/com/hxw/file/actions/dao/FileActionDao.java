@@ -17,8 +17,7 @@ import com.hxw.file.actions.utils.ConvertUtils;
 import com.hxw.file.actions.utils.FileUtil;
 import com.hxw.file.http.HttpFactory;
 import com.hxw.file.http.help.HttpHelper;
-import com.hxw.file.http.progress.download.ProgressDownloadListener;
-import com.hxw.file.http.progress.upload.ProgressUploadListener;
+import com.hxw.file.http.progress.IProgressListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,9 +52,9 @@ public class FileActionDao {
             liveData.postValue(null);
             return liveData;
         }
-        return HttpFactory.getInstance().createProgressUpload(FileActionApi.class, new ProgressUploadListener() {
+        return HttpFactory.getInstance().createProgressUpload(FileActionApi.class, new IProgressListener() {
             @Override
-            public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+            public void onProgress(long bytesWritten, long contentLength, boolean done) {
                 Log.e("FileActionDao", "上传::::bytesWritten:" + bytesWritten
                         + ",contentLength:" + contentLength
                         + ",done:" + done);
@@ -72,9 +71,9 @@ public class FileActionDao {
             return;
         }
         for (final String fileUrl : downloadFileUrl) {
-            HttpFactory.getInstance().createProgressDownload(FileActionApi.class, new ProgressDownloadListener() {
+            HttpFactory.getInstance().createProgressDownload(FileActionApi.class, new IProgressListener() {
                 @Override
-                public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+                public void onProgress(long bytesRead, long contentLength, boolean done) {
                     Log.e("FileActionDao", "下载::::bytesWritten:" + bytesRead
                             + ",contentLength:" + contentLength
                             + ",done:" + done);

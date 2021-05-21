@@ -28,7 +28,7 @@ object ConfigFactory {
     private var httpClient: OkHttpClient? = null
 
     fun getRetrofit(baseUrl: String, client: OkHttpClient): Retrofit {
-        if (retrofitMap.contains(baseUrl)) {
+        if (retrofitMap.containsKey(baseUrl)) {
             var retrofit = retrofitMap[baseUrl]
             if (retrofit == null) {
                 retrofit = createRetrofit(baseUrl, client)

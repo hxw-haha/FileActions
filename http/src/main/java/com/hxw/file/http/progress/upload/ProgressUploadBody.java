@@ -1,5 +1,7 @@
 package com.hxw.file.http.progress.upload;
 
+import com.hxw.file.http.progress.IProgressListener;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -13,26 +15,28 @@ import okio.Sink;
 /**
  * 包装的请求体，处理进度
  */
-public  class ProgressUploadBody extends RequestBody {
+public class ProgressUploadBody extends RequestBody {
     //实际的待包装请求体
-    private  RequestBody requestBody;
+    private RequestBody requestBody;
     //进度回调接口
-    private ProgressUploadListener progressListener;
+    private IProgressListener progressListener;
     //包装完成的BufferedSink
     private BufferedSink bufferedSink;
 
     /**
      * 构造函数，赋值
-     * @param requestBody 待包装的请求体
+     *
+     * @param requestBody      待包装的请求体
      * @param progressListener 回调接口
      */
-    public ProgressUploadBody(RequestBody requestBody, ProgressUploadListener progressListener) {
+    public ProgressUploadBody(RequestBody requestBody, IProgressListener progressListener) {
         this.requestBody = requestBody;
         this.progressListener = progressListener;
     }
 
     /**
      * 重写调用实际的响应体的contentType
+     *
      * @return MediaType
      */
     @Override
@@ -42,6 +46,7 @@ public  class ProgressUploadBody extends RequestBody {
 
     /**
      * 重写调用实际的响应体的contentLength
+     *
      * @return contentLength
      * @throws IOException 异常
      */
@@ -52,25 +57,25 @@ public  class ProgressUploadBody extends RequestBody {
 
     /**
      * 重写进行写入
+     *
      * @param sink BufferedSink
      * @throws IOException 异常
      */
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
         if (bufferedSink == null) {
-//            //包装
+            //包装
             bufferedSink = Okio.buffer(sink(sink));
-
         }
         //写入
         requestBody.writeTo(bufferedSink);
         //必须调用flush，否则最后一部分数据可能不会被写入
         bufferedSink.flush();
-
     }
 
     /**
      * 写入，回调进度接口
+     *
      * @param sink Sink
      * @return Sink
      */
@@ -91,8 +96,8 @@ public  class ProgressUploadBody extends RequestBody {
                 //增加当前写入的字节数
                 bytesWritten += byteCount;
                 //回调
-                if(progressListener != null){
-                    progressListener.onRequestProgress(bytesWritten, contentLength, bytesWritten == contentLength);
+                if (progressListener != null) {
+                    progressListener.onProgress(bytesWritten, contentLength, bytesWritten == contentLength);
                 }
             }
         };

@@ -5,16 +5,13 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.hxw.file.http.help.HttpHelper;
-import com.hxw.file.http.progress.upload.ProgressUploadListener;
-import com.hxw.file.http.progress.download.ProgressDownloadListener;
+import com.hxw.file.http.progress.IProgressListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,44 +80,65 @@ public class HttpFactory {
         return get(baseUrl).create(service);
     }
 
-    public <T> T createProgressDownload(Class<T> service, ProgressDownloadListener listener) {
+    /**
+     * 创建文件下载、带进度条 service
+     *
+     * @param service
+     * @param listener 进度回调监听器
+     * @param <T>
+     * @return
+     */
+    public <T> T createProgressDownload(Class<T> service, IProgressListener listener) {
         return createProgressDownload(service, "", listener);
     }
 
-    public <T> T createProgressDownload(Class<T> service, String baseUrl, ProgressDownloadListener listener) {
+    /**
+     * 创建文件下载、带进度条 service
+     *
+     * @param service
+     * @param baseUrl
+     * @param listener 进度回调监听器
+     * @param <T>
+     * @return
+     */
+    public <T> T createProgressDownload(Class<T> service, String baseUrl, IProgressListener listener) {
         return get(baseUrl)
                 .newBuilder().client(HttpHelper.addProgressDownloadListener(listener))
                 .build()
                 .create(service);
     }
 
-    public <T> T createProgressUpload(Class<T> service, ProgressUploadListener listener) {
+    /**
+     * 创建文件上传、带进度条 service
+     *
+     * @param service
+     * @param listener 进度回调监听器
+     * @param <T>
+     * @return
+     */
+    public <T> T createProgressUpload(Class<T> service, IProgressListener listener) {
         return createProgressUpload(service, "", listener);
     }
 
-    public <T> T createProgressUpload(Class<T> service, String baseUrl, ProgressUploadListener listener) {
+    /**
+     * 创建文件上传、带进度条 service
+     *
+     * @param service
+     * @param baseUrl
+     * @param listener 进度回调监听器
+     * @param <T>
+     * @return
+     */
+    public <T> T createProgressUpload(Class<T> service, String baseUrl, IProgressListener listener) {
         return get(baseUrl)
                 .newBuilder().client(HttpHelper.addProgressUploadListener(listener))
                 .build()
                 .create(service);
     }
 
-    public <T> void enqueue(@NonNull final Call<T> call, @NonNull final IHttpListener<T> listener) {
-        call.enqueue(new Callback<T>() {
-            @Override
-            public void onResponse(Call<T> call, Response<T> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    listener.onHttpCall(true, response.body(), "");
-                } else {
-                    listener.onHttpCall(false, null, "");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<T> call, Throwable t) {
-                listener.onHttpCall(false, null, "");
-            }
-        });
+    public <T> void enqueue(@NonNull final Call<T> call, @NonNull final IHttpListener<T> listener) {
+        enqueue(call, listener, "");
     }
 
     public <T> void enqueue(@NonNull final Call<T> call, @NonNull final IHttpListener<T> listener, final Object flag) {
@@ -139,13 +157,6 @@ public class HttpFactory {
                 listener.onHttpCall(false, null, flag);
             }
         });
-    }
-
-    /**
-     * 请求 body
-     */
-    public RequestBody getStringBody(@NonNull String String) {
-        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), String);
     }
 
     public static class HttpConfig {

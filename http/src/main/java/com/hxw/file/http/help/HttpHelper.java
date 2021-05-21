@@ -2,10 +2,11 @@ package com.hxw.file.http.help;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.hxw.file.http.progress.IProgressListener;
 import com.hxw.file.http.progress.upload.ProgressUploadBody;
-import com.hxw.file.http.progress.upload.ProgressUploadListener;
 import com.hxw.file.http.progress.download.ProgressDownloadBody;
-import com.hxw.file.http.progress.download.ProgressDownloadListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class HttpHelper {
      * @param progressListener 进度回调接口
      * @return 包装后的OkHttpClient
      */
-    public static OkHttpClient addProgressDownloadListener(final ProgressDownloadListener progressListener) {
+    public static OkHttpClient addProgressDownloadListener(final IProgressListener progressListener) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         //增加拦截器
         client.addInterceptor(new Interceptor() {
@@ -56,7 +57,7 @@ public class HttpHelper {
      * @param progressListener 进度回调接口
      * @return 包装后的OkHttpClient
      */
-    public static OkHttpClient addProgressUploadListener(final ProgressUploadListener progressListener) {
+    public static OkHttpClient addProgressUploadListener(final IProgressListener progressListener) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         //增加拦截器
         client.addInterceptor(new Interceptor() {
@@ -73,11 +74,24 @@ public class HttpHelper {
         return client.build();
     }
 
-    public static MultipartBody filesToMultipartBody(List<File> files) {
+    /**
+     * 请求 body
+     */
+    public RequestBody getStringBody(@NonNull String String) {
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), String);
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param files
+     * @return
+     */
+    public static MultipartBody filesToMultipartBody(@NonNull List<File> files) {
         return filesToMultipartBody("files", files);
     }
 
-    public static MultipartBody filesToMultipartBody(String name, List<File> files) {
+    public static MultipartBody filesToMultipartBody(@NonNull String name, @NonNull List<File> files) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (File file : files) {
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -87,4 +101,51 @@ public class HttpHelper {
         return builder.build();
     }
 
+
+    /**
+     * 将下载文件，写入到磁盘
+     *
+     * @param body
+     * @param absoluteFileName 下载文件绝对路径+文件名字
+     * @return
+     */
+    public static boolean writeResponseBodyToDisk(@NonNull ResponseBody body, @NonNull File absoluteFileName) {
+        try {
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(absoluteFileName);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+                    if (read == -1) {
+                        break;
+                    }
+                    outputStream.write(fileReader, 0, read);
+                    fileSizeDownloaded += read;
+
+                    Log.d("writeResponseBodyToDisk", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                }
+                outputStream.flush();
+                return true;
+            } catch (IOException e) {
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }
