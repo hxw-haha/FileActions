@@ -28,5 +28,18 @@
             android:layout_marginTop="20dp"
             android:text="文件下载" />
 
+        <com.hxw.file.actions.view.draw.pie.PieLinearView
+            android:id="@+id/pie_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.hxw.file.actions.view.draw.bar.BarView
+            android:background="#EBECE9"
+            android:id="@+id/bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:visibility="visible" />
+
     </LinearLayout>
 </layout>

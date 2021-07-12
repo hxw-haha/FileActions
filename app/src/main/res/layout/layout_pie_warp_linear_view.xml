@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hxw.file.actions.view.draw.pie.PieView
+        android:id="@+id/pie_warp_linear_view"
+        android:layout_width="match_parent"
+        android:layout_height="180dp" />
+
+    <com.hxw.file.actions.view.WarpLinearLayout
+        android:id="@+id/pie_warp_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:gravity="left"
+        app:horizontal_Space="16dp"
+        app:isFull="false"
+        app:vertical_Space="5dp" />
+
+</merge>

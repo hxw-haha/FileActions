@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/hint_color_view"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        tools:background="#7582CD" />
+
+    <TextView
+        android:id="@+id/hint_title_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6dp"
+        tools:text="我要存款" />
+
+
+</LinearLayout>
