@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#CCCAC8</item>
+        <item name="colorAccent">#7E7E7D</item>
         <item name="windowNoTitle">true</item>
     </style>
 
@@ -20,8 +20,9 @@
         <attr name="isFull" format="boolean" />
     </declare-styleable>
 
+    <!-- 柱状图 -->
     <declare-styleable name="BarView">
-        <attr name="bar_item_width" format="dimension"/>
+        <attr name="bar_item_width" format="dimension" />
         <!-- 顶部文字的大小 -->
         <attr name="bar_t_text_size" format="dimension" />
         <!-- 顶部文字的颜色 -->
@@ -33,5 +34,17 @@
         <!-- 绘制x轴线条的颜色 -->
         <attr name="bar_line_color" format="color" />
     </declare-styleable>
-
+    <!-- 饼图-线性 -->
+    <declare-styleable name="PieLinearView">
+        <!-- 饼图高度 -->
+        <attr name="pie_l_height" format="dimension" />
+        <!-- 标题字体大小 -->
+        <attr name="pie_l_title_size" format="dimension" />
+        <!-- 标题字体颜色 -->
+        <attr name="pie_l_title_color" format="color" />
+        <!-- 饼图占比字体大小 -->
+        <attr name="pie_l_scale_size" format="dimension" />
+        <!-- 饼图占比字体大小 -->
+        <attr name="pie_l_scale_color" format="color" />
+    </declare-styleable>
 </resources>

@@ -6,8 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,7 +18,7 @@ import com.hxw.file.actions.view.draw.DrawData;
 import java.util.List;
 
 /**
- * <p>文件描述：</p>
+ * <p>文件描述：柱状图/条形图</p>
  * <p>作者：hanxw</p>
  * <p>创建时间：2021/7/12</p>
  * <p>更改时间：2021/7/12</p>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="32dp"
+    android:minHeight="28dp"
     android:orientation="horizontal">
 
     <Space
@@ -14,8 +14,8 @@
 
     <View
         android:id="@+id/hint_color_view"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         tools:background="#7582CD" />
 
     <TextView

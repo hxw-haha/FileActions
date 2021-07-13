@@ -32,14 +32,17 @@
             android:id="@+id/pie_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:visibility="visible"
+            app:pie_l_height="140dp"
+            app:pie_l_scale_size="16sp"
+            app:pie_l_title_size="16sp" />
 
         <com.hxw.file.actions.view.draw.bar.BarView
             android:id="@+id/bar_view"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="#EBECE9"
-            android:visibility="visible"
+            android:visibility="gone"
             app:bar_b_text_size="12sp"
             app:bar_item_width="12sp"
             app:bar_t_text_size="9sp" />
