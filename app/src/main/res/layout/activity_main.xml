@@ -35,11 +35,14 @@
             android:visibility="gone" />
 
         <com.hxw.file.actions.view.draw.bar.BarView
-            android:background="#EBECE9"
             android:id="@+id/bar_view"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:visibility="visible" />
+            android:background="#EBECE9"
+            android:visibility="visible"
+            app:bar_b_text_size="12sp"
+            app:bar_item_width="12sp"
+            app:bar_t_text_size="9sp" />
 
     </LinearLayout>
 </layout>

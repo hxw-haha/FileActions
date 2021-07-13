@@ -2,16 +2,19 @@ package com.hxw.file.actions.view.draw.bar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.hxw.file.actions.R;
 import com.hxw.file.actions.view.draw.DrawData;
 
 import java.util.List;
@@ -25,23 +28,17 @@ import java.util.List;
  */
 public class BarView extends View {
     /**
-     * 默认大小
+     * 宽，高
      */
-    private static final int DEFAULT_SIZE = 200;
-
+    private int mWidth = 200, mHeight = 200;
     /**
-     * 宽
+     * 设置显示样式
      */
-    private int mWidth = DEFAULT_SIZE;
-    /**
-     * 高
-     */
-    private int mHeight = DEFAULT_SIZE;
+    private BarStyle mBarStyle;
 
     private Paint mPaint;
     private List<DrawData> mBarDataList;
     private int mMaxCount;
-    private int mBarWidthSize, mTopHintTextSize, mBottomHintTextSize;
 
     public void setBarDataList(List<DrawData> barDataList) {
         if (barDataList == null || barDataList.size() == 0) {
@@ -64,17 +61,31 @@ public class BarView extends View {
 
     public BarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initTypedArrayData(context, attrs);
+        initPaint();
+    }
+
+    private void initTypedArrayData(Context context, AttributeSet attrs) {
+        final int defaultTextColor = Color.parseColor("#CCCAC8");
+        mBarStyle = new BarStyle();
+        final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BarView);
+        mBarStyle.barItemWidth = array.getDimensionPixelSize(R.styleable.BarView_bar_item_width, sp2px(10));
+        mBarStyle.topTextSize = array.getDimensionPixelSize(R.styleable.BarView_bar_t_text_size, sp2px(10));
+        mBarStyle.topTextColor = array.getColor(R.styleable.BarView_bar_t_text_color, defaultTextColor);
+        mBarStyle.bottomTextSize = array.getDimensionPixelSize(R.styleable.BarView_bar_b_text_size, sp2px(13));
+        mBarStyle.bottomTextColor = array.getColor(R.styleable.BarView_bar_b_text_color, defaultTextColor);
+        mBarStyle.lineColor = array.getColor(R.styleable.BarView_bar_line_color, defaultTextColor);
+        array.recycle();
+    }
+
+    private void initPaint() {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
         //防抖动
         mPaint.setDither(true);
         //去锯齿
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.parseColor("#B1B0AF"));
-        mPaint.setStrokeWidth(3);
-        mTopHintTextSize = sp2px(10);
-        mBarWidthSize = sp2px(10);
-        mBottomHintTextSize = sp2px(13);
+        mPaint.setStrokeWidth(2);
     }
 
     @Override
@@ -118,9 +129,9 @@ public class BarView extends View {
         if (mBarDataList == null || mBarDataList.size() == 0) {
             return;
         }
-        canvas.translate(0, mHeight - mBottomHintTextSize * 3f / 2);
+        canvas.translate(0, mHeight - mBarStyle.bottomTextSize * 3f / 2);
 
-        canvas.drawLine(0, 0, mWidth, 0, mPaint);
+        drawLine(canvas);
 
         final float averageWidth = (float) mWidth / mBarDataList.size();
         final int barDataLength = mBarDataList.size();
@@ -129,7 +140,7 @@ public class BarView extends View {
             //每个条形图宽度中心点
             final float itemCentre = averageWidth * i + averageWidth / 2;
             //每个条形图高度
-            final int itemBarHeight = data.count * (mHeight - mBottomHintTextSize * 3 / 2 - mTopHintTextSize * 2) / mMaxCount;
+            final int itemBarHeight = data.count * (mHeight - mBarStyle.bottomTextSize * 3 / 2 - mBarStyle.topTextSize * 2) / mMaxCount;
 
             drawTopHintText(canvas, data, itemCentre, itemBarHeight);
 
@@ -137,6 +148,16 @@ public class BarView extends View {
 
             drawBottomHintText(canvas, data, itemCentre);
         }
+    }
+
+    /**
+     * 绘制线条
+     *
+     * @param canvas
+     */
+    private void drawLine(Canvas canvas) {
+        mPaint.setColor(mBarStyle.lineColor);
+        canvas.drawLine(0, 0, mWidth, 0, mPaint);
     }
 
     /**
@@ -148,10 +169,10 @@ public class BarView extends View {
      * @param itemBarHeight 条形图高度
      */
     private void drawTopHintText(Canvas canvas, DrawData data, float itemCentre, int itemBarHeight) {
-        mPaint.setTextSize(mTopHintTextSize);
-        mPaint.setColor(Color.parseColor("#B1B0AF"));
+        mPaint.setTextSize(mBarStyle.topTextSize);
+        mPaint.setColor(mBarStyle.topTextColor);
         final String hint = String.valueOf(data.count);
-        final int itemTextHeight = itemBarHeight + mTopHintTextSize;
+        final int itemTextHeight = itemBarHeight + mBarStyle.topTextSize;
         float hintTextWidth = measureWidth(hint);
         canvas.drawText(hint, itemCentre - hintTextWidth / 2f,
                 -itemTextHeight, mPaint);
@@ -169,14 +190,14 @@ public class BarView extends View {
         //每个条形图颜色
         mPaint.setColor(Color.parseColor(data.color));
         //画条形图
-        canvas.drawRect(itemCentre - (mBarWidthSize / 2f),
+        canvas.drawRect(itemCentre - (mBarStyle.barItemWidth / 2f),
                 -itemBarHeight,
-                itemCentre + (mBarWidthSize / 2f), 0, mPaint);
+                itemCentre + (mBarStyle.barItemWidth / 2f), 0, mPaint);
 
         //画顶部圆
         canvas.drawCircle(itemCentre,
                 -itemBarHeight,
-                mBarWidthSize / 2f, mPaint);
+                mBarStyle.barItemWidth / 2f, mPaint);
     }
 
     /**
@@ -187,28 +208,29 @@ public class BarView extends View {
      * @param itemCentre 条形图宽度中心点
      */
     private void drawBottomHintText(Canvas canvas, DrawData data, float itemCentre) {
-        mPaint.setTextSize(mBottomHintTextSize);
-        mPaint.setColor(Color.parseColor("#B1B0AF"));
+        mPaint.setTextSize(mBarStyle.bottomTextSize);
+        mPaint.setColor(mBarStyle.bottomTextColor);
         final String hint = String.valueOf(data.name);
         float hintTextWidth = measureWidth(hint);
         canvas.drawText(hint, itemCentre - hintTextWidth / 2f,
-                mBottomHintTextSize, mPaint);
+                mBarStyle.bottomTextSize, mPaint);
     }
-
-
-    private int sp2px(float spValue) {
-        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
-
-/*
-    private int measureHeight() {
-        Paint.FontMetricsInt fm = mPaint.getFontMetricsInt();
-        return ~fm.top - (~fm.top - ~fm.ascent) - (fm.bottom - fm.descent);
-    }
-*/
 
     private int measureWidth(String text) {
         return (int) mPaint.measureText(text);
+    }
+
+    private int sp2px(float sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
+                getResources().getDisplayMetrics());
+    }
+
+    static class BarStyle {
+        int barItemWidth;
+        int topTextSize;
+        int topTextColor;
+        int bottomTextSize;
+        int bottomTextColor;
+        int lineColor;
     }
 }

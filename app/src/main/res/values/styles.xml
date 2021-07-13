@@ -4,20 +4,34 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#B1B0AF</item>
+        <item name="colorAccent">#CCCAC8</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <!--自动换行的LinearLayout !-->
     <declare-styleable name="WarpLinearLayout">
         <attr name="gravity" format="enum"><!--对齐方式 !-->
-            <enum name="right" value="0"/>
-            <enum name="left" value="1"/>
-            <enum name="center" value="2"/>
+            <enum name="right" value="0" />
+            <enum name="left" value="1" />
+            <enum name="center" value="2" />
         </attr>
-        <attr name="horizontal_Space" format="dimension"/>
-        <attr name="vertical_Space" format="dimension"/>
-        <attr name="isFull" format="boolean"/>
+        <attr name="horizontal_Space" format="dimension" />
+        <attr name="vertical_Space" format="dimension" />
+        <attr name="isFull" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BarView">
+        <attr name="bar_item_width" format="dimension"/>
+        <!-- 顶部文字的大小 -->
+        <attr name="bar_t_text_size" format="dimension" />
+        <!-- 顶部文字的颜色 -->
+        <attr name="bar_t_text_color" format="color" />
+        <!-- 底部文字的大小 -->
+        <attr name="bar_b_text_size" format="dimension" />
+        <!-- 底部文字的颜色 -->
+        <attr name="bar_b_text_color" format="color" />
+        <!-- 绘制x轴线条的颜色 -->
+        <attr name="bar_line_color" format="color" />
     </declare-styleable>
 
 </resources>

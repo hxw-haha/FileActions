@@ -115,11 +115,7 @@ public class PieView extends View {
 
         for (DrawData pieData : mPieDataList) {
             divideAngle = pieData.count * (360 * 1.0f) / mSumCount;
-            try {
-                mPaint.setColor(Color.parseColor(pieData.color));
-            } catch (Exception ex) {
-                mPaint.setColor(Color.parseColor(DEFAULT_COLOR[new Random().nextInt(DEFAULT_COLOR.length)]));
-            }
+            mPaint.setColor(Color.parseColor(pieData.color));
             canvas.drawArc(oval, firstAngle, divideAngle, true, mPaint);
             firstAngle += divideAngle;
         }
