@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -195,11 +196,11 @@ public class WarpLinearLayout extends ViewGroup {
         /**
          * 水平间距,单位px
          */
-        private float horizontal_Space;
+        private int horizontal_Space;
         /**
          * 垂直间距,单位px
          */
-        private float vertical_Space;
+        private int vertical_Space;
         /**
          * 是否自动填满
          */
@@ -211,8 +212,8 @@ public class WarpLinearLayout extends ViewGroup {
             }
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WarpLinearLayout);
             gravity = typedArray.getInt(R.styleable.WarpLinearLayout_gravity, gravity);
-            horizontal_Space = typedArray.getDimension(R.styleable.WarpLinearLayout_horizontal_Space, horizontal_Space);
-            vertical_Space = typedArray.getDimension(R.styleable.WarpLinearLayout_vertical_Space, vertical_Space);
+            horizontal_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_horizontal_Space, sp2px(context,8));
+            vertical_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_vertical_Space, sp2px(context,8));
             isFull = typedArray.getBoolean(R.styleable.WarpLinearLayout_isFull, isFull);
             typedArray.recycle();
         }
@@ -238,16 +239,21 @@ public class WarpLinearLayout extends ViewGroup {
         mType.gravity = gravity;
     }
 
-    public void setHorizontal_Space(float horizontal_Space) {
+    public void setHorizontal_Space(int horizontal_Space) {
         mType.horizontal_Space = horizontal_Space;
     }
 
-    public void setVertical_Space(float vertical_Space) {
+    public void setVertical_Space(int vertical_Space) {
         mType.vertical_Space = vertical_Space;
     }
 
     public void setIsFull(boolean isFull) {
         mType.isFull = isFull;
+    }
+
+    private static int sp2px(Context context, float sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
+                context.getResources().getDisplayMetrics());
     }
 
     /**

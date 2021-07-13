@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:gravity="left"
-        app:horizontal_Space="16dp"
+        app:horizontal_Space="20dp"
         app:isFull="false"
-        app:vertical_Space="5dp" />
+        app:vertical_Space="10dp" />
 
 </merge>

@@ -47,4 +47,20 @@
         <!-- 饼图占比字体大小 -->
         <attr name="pie_l_scale_color" format="color" />
     </declare-styleable>
+    <!-- 饼图-自动换行 -->
+    <declare-styleable name="PieWarpLinearView">
+        <!-- 饼图高度 -->
+        <attr name="pie_wl_height" format="dimension" />
+        <!-- 标题字体大小 -->
+        <attr name="pie_wl_title_size" format="dimension" />
+        <!-- 标题字体颜色 -->
+        <attr name="pie_wl_title_color" format="color" />
+        <attr name="pie_wl_gravity" format="enum">
+            <enum name="right" value="0" />
+            <enum name="left" value="1" />
+            <enum name="center" value="2" />
+        </attr>
+        <attr name="pie_wl_horizontal_space" format="dimension" />
+        <attr name="pie_wl_vertical_space" format="dimension" />
+    </declare-styleable>
 </resources>

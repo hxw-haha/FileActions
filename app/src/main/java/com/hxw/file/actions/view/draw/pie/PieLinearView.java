@@ -135,7 +135,6 @@ public class PieLinearView extends LinearLayout {
         }
     }
 
-
     private int sp2px(float sp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
                 getResources().getDisplayMetrics());
