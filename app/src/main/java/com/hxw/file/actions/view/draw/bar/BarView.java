@@ -130,11 +130,31 @@ public class BarView extends View {
             final float itemCentre = averageWidth * i + averageWidth / 2;
             //每个条形图高度
             final int itemBarHeight = data.count * (mHeight - mBottomHintTextSize * 3 / 2 - mTopHintTextSize * 2) / mMaxCount;
+
             drawTopHintText(canvas, data, itemCentre, itemBarHeight);
 
             drawBar(canvas, data, itemCentre, itemBarHeight);
+
             drawBottomHintText(canvas, data, itemCentre);
         }
+    }
+
+    /**
+     * 画顶部提示信息
+     *
+     * @param canvas
+     * @param data          绘制内容
+     * @param itemCentre    条形图宽度中心点
+     * @param itemBarHeight 条形图高度
+     */
+    private void drawTopHintText(Canvas canvas, DrawData data, float itemCentre, int itemBarHeight) {
+        mPaint.setTextSize(mTopHintTextSize);
+        mPaint.setColor(Color.parseColor("#B1B0AF"));
+        final String hint = String.valueOf(data.count);
+        final int itemTextHeight = itemBarHeight + mTopHintTextSize;
+        float hintTextWidth = measureWidth(hint);
+        canvas.drawText(hint, itemCentre - hintTextWidth / 2f,
+                -itemTextHeight, mPaint);
     }
 
     /**
@@ -160,24 +180,6 @@ public class BarView extends View {
     }
 
     /**
-     * 画顶部提示信息
-     *
-     * @param canvas
-     * @param data          绘制内容
-     * @param itemCentre    条形图宽度中心点
-     * @param itemBarHeight 条形图高度
-     */
-    private void drawTopHintText(Canvas canvas, DrawData data, float itemCentre, int itemBarHeight) {
-        mPaint.setTextSize(mTopHintTextSize);
-        mPaint.setColor(Color.parseColor("#B1B0AF"));
-        final String hint = String.valueOf(data.count);
-        final int itemTextHeight = itemBarHeight + mTopHintTextSize;
-        float hintTextWidth = measureWidth(hint);
-        canvas.drawText(hint, itemCentre - hintTextWidth / 2f,
-                -itemTextHeight, mPaint);
-    }
-
-    /**
      * 画底部提示信息
      *
      * @param canvas
@@ -185,7 +187,7 @@ public class BarView extends View {
      * @param itemCentre 条形图宽度中心点
      */
     private void drawBottomHintText(Canvas canvas, DrawData data, float itemCentre) {
-        mPaint.setTextSize(mTopHintTextSize);
+        mPaint.setTextSize(mBottomHintTextSize);
         mPaint.setColor(Color.parseColor("#B1B0AF"));
         final String hint = String.valueOf(data.name);
         float hintTextWidth = measureWidth(hint);
