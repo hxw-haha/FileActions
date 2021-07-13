@@ -60,7 +60,7 @@ public class PieLinearView extends LinearLayout {
         initTypedArrayData(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_pie_linear_view, this);
         mPieView = findViewById(R.id.pie_linear_view);
-        mPieView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mPieStyle.pieHeight));
+        mPieView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, mPieStyle.pieHeight));
         mListView = findViewById(R.id.pie_linear_list_view);
     }
 

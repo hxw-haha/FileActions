@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,6 +57,8 @@ public class PieWarpLinearView extends LinearLayout {
             final TextView title = itemRootView.findViewById(R.id.hint_title_view);
             color.setBackgroundColor(Color.parseColor(data.color));
             title.setText(data.name);
+            title.setTextColor(mPieStyle.titleColor);
+            title.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPieStyle.titleSize);
             mWarpLayout.addView(itemRootView);
         }
     }
@@ -74,8 +77,11 @@ public class PieWarpLinearView extends LinearLayout {
         initTypedArrayData(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_pie_warp_linear_view, this);
         mPieView = findViewById(R.id.pie_warp_linear_view);
+        mPieView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, mPieStyle.pieHeight));
         mWarpLayout = findViewById(R.id.pie_warp_linear_layout);
-//        mWarpLayout.setHorizontal_Space();
+        mWarpLayout.setGravity(mPieStyle.gravity);
+        mWarpLayout.setHorizontal_Space(mPieStyle.horizontalSpace);
+        mWarpLayout.setVertical_Space(mPieStyle.verticalSpace);
     }
 
     private void initTypedArrayData(Context context, AttributeSet attrs) {
@@ -85,7 +91,7 @@ public class PieWarpLinearView extends LinearLayout {
         mPieStyle.pieHeight = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_height, sp2px(180));
         mPieStyle.titleSize = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_title_size, sp2px(12));
         mPieStyle.titleColor = array.getColor(R.styleable.PieWarpLinearView_pie_wl_title_color, defaultTextColor);
-        mPieStyle.gravity = array.getInt(R.styleable.PieWarpLinearView_pie_wl_gravity, 0);
+        mPieStyle.gravity = array.getInt(R.styleable.PieWarpLinearView_pie_wl_gravity, 1);
         mPieStyle.horizontalSpace = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_horizontal_space, sp2px(8));
         mPieStyle.verticalSpace = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_vertical_space, sp2px(5));
         array.recycle();

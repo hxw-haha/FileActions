@@ -33,9 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            app:pie_l_height="140dp"
-            app:pie_l_scale_size="16sp"
-            app:pie_l_title_size="16sp" />
+            app:pie_wl_height="140dp"
+            app:pie_wl_horizontal_space="20dp"
+            app:pie_wl_title_size="16sp"
+            app:pie_wl_vertical_space="5dp" />
 
         <com.hxw.file.actions.view.draw.bar.BarView
             android:id="@+id/bar_view"
