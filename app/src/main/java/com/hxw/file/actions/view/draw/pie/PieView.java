@@ -110,7 +110,7 @@ public class PieView extends View {
                 (getHeight() + getPaddingTop() - getPaddingBottom()) >> 1);
         //定义一个RectF对象，表示扇形绘制区域
         final RectF oval = new RectF(-mRadius, -mRadius, mRadius, mRadius);
-        float firstAngle = 0.0f;
+        float firstAngle = -90.0f;
         float divideAngle;
 
         for (DrawData pieData : mPieDataList) {
