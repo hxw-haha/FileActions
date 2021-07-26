@@ -1,4 +1,4 @@
-package com.hxw.file.actions.view.draw.pie;
+package com.hxw.file.actions.view.chart.pie;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,15 +8,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hxw.file.actions.R;
-import com.hxw.file.actions.view.draw.DrawData;
+import com.hxw.file.actions.view.chart.ChartData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +28,12 @@ import java.util.List;
  * <p>版本号：1</p>
  */
 public class PieLinearView extends LinearLayout {
-    private List<DrawData> mPieDataList = new ArrayList<>();
+    private List<ChartData> mPieDataList = new ArrayList<>();
     private PieView mPieView;
-    private ListView mListView;
+    private RecyclerView mListView;
     private PieLinearStyle mPieStyle;
 
-    public void setPieDataList(List<DrawData> pieDataList) {
+    public void setPieDataList(List<ChartData> pieDataList) {
         if (pieDataList == null || pieDataList.size() == 0) {
             return;
         }
@@ -43,7 +42,7 @@ public class PieLinearView extends LinearLayout {
         if (mPieView != null) {
             mPieView.setPieDataList(mPieDataList);
         }
-        mListView.setAdapter(new PieListAdapter(getContext(), mPieDataList, mPieStyle));
+        mListView.setAdapter(new PieListAdapter(mPieDataList, mPieStyle));
     }
 
     public PieLinearView(Context context) {
@@ -76,43 +75,25 @@ public class PieLinearView extends LinearLayout {
         array.recycle();
     }
 
-    static class PieListAdapter extends BaseAdapter {
-        private final List<DrawData> mPieDataList;
+    static class PieListAdapter extends RecyclerView.Adapter<HolderView> {
+        private final List<ChartData> mPieDataList;
         private final PieLinearStyle mPieStyle;
-        private LayoutInflater mInflate;
 
-        PieListAdapter(Context context, List<DrawData> pieDataList, PieLinearStyle pieStyle) {
+        PieListAdapter(List<ChartData> pieDataList, PieLinearStyle pieStyle) {
             this.mPieDataList = pieDataList;
-            this.mInflate = LayoutInflater.from(context);
             this.mPieStyle = pieStyle;
         }
 
         @Override
-        public int getCount() {
-            return mPieDataList != null ? mPieDataList.size() : 0;
+        public HolderView onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View rootView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.layout_pie_linear_view_item, viewGroup, false);
+            return new HolderView(rootView);
         }
 
         @Override
-        public DrawData getItem(int position) {
-            return mPieDataList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            HolderView viewHolder;
-            if (convertView == null) {
-                convertView = mInflate.inflate(R.layout.layout_pie_linear_view_item, null);
-                viewHolder = new HolderView(convertView);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (HolderView) convertView.getTag();
-            }
-            final DrawData data = mPieDataList.get(position);
+        public void onBindViewHolder(HolderView viewHolder, int position) {
+            final ChartData data = mPieDataList.get(position);
             viewHolder.color.setBackgroundColor(Color.parseColor(data.color));
             viewHolder.title.setText(data.name);
             viewHolder.title.setTextColor(mPieStyle.titleColor);
@@ -120,15 +101,21 @@ public class PieLinearView extends LinearLayout {
             viewHolder.count.setText(String.valueOf(data.count));
             viewHolder.count.setTextColor(mPieStyle.scaleColor);
             viewHolder.count.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPieStyle.scaleSize);
-            return convertView;
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return mPieDataList != null ? mPieDataList.size() : 0;
         }
     }
 
-    static class HolderView {
+    static class HolderView extends RecyclerView.ViewHolder {
         View color;
         TextView title, count;
 
         public HolderView(View rootView) {
+            super(rootView);
             color = rootView.findViewById(R.id.hint_color_view);
             title = rootView.findViewById(R.id.hint_title_view);
             count = rootView.findViewById(R.id.hint_count_view);

@@ -6,7 +6,7 @@ import com.hxw.file.actions.base.activity.DefaultActivity
 import com.hxw.file.actions.databinding.ActivityMainBinding
 import com.hxw.file.actions.page.download.DownloadActivity
 import com.hxw.file.actions.page.upload.UploadActivity
-import com.hxw.file.actions.view.draw.DrawData
+import com.hxw.file.actions.view.chart.ChartData
 
 class MainActivity : DefaultActivity() {
     private lateinit var mBinding: ActivityMainBinding
@@ -22,28 +22,28 @@ class MainActivity : DefaultActivity() {
 
     override fun initData(savedInstanceState: Bundle?) {
         super.initData(savedInstanceState)
-        val list = ArrayList<DrawData>()
-        list.add(DrawData().apply {
+        val list = ArrayList<ChartData>()
+        list.add(ChartData().apply {
             color = "#6200EE"
             count = 9
             name = "我要存款"
         })
-        list.add(DrawData().apply {
+        list.add(ChartData().apply {
             color = "#EC407A"
             count = 20
             name = "我要取钱"
         })
-        list.add(DrawData().apply {
+        list.add(ChartData().apply {
             color = "#03DAC5"
             count = 30
             name = "信用卡申请"
         })
-        list.add(DrawData().apply {
+        list.add(ChartData().apply {
             color = "#ADB657"
             count = 20
             name = "现金业务"
         })
-        list.add(DrawData().apply {
+        list.add(ChartData().apply {
             color = "#E67451"
             count = 100
             name = "鑫易存单"

@@ -1,4 +1,4 @@
-package com.hxw.file.actions.view.draw.pie;
+package com.hxw.file.actions.view.chart.pie;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,10 +11,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.hxw.file.actions.view.draw.DrawData;
+import com.hxw.file.actions.view.chart.ChartData;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * <p>文件描述：</p>
@@ -32,14 +31,14 @@ public class PieView extends View {
     private int mRadius = DEFAULT_RADIUS;
     private Paint mPaint;
 
-    private List<DrawData> mPieDataList;
+    private List<ChartData> mPieDataList;
     private int mSumCount = 0;
 
-    public void setPieDataList(List<DrawData> pieDataList) {
+    public void setPieDataList(List<ChartData> pieDataList) {
         if (pieDataList == null || pieDataList.size() == 0) {
             return;
         }
-        for (DrawData pieData : pieDataList) {
+        for (ChartData pieData : pieDataList) {
             mSumCount += pieData.count;
         }
         this.mPieDataList = pieDataList;
@@ -113,7 +112,7 @@ public class PieView extends View {
         float firstAngle = -90.0f;
         float divideAngle;
 
-        for (DrawData pieData : mPieDataList) {
+        for (ChartData pieData : mPieDataList) {
             divideAngle = pieData.count * (360 * 1.0f) / mSumCount;
             mPaint.setColor(Color.parseColor(pieData.color));
             canvas.drawArc(oval, firstAngle, divideAngle, true, mPaint);

@@ -1,4 +1,4 @@
-package com.hxw.file.actions.view.draw.bar;
+package com.hxw.file.actions.view.chart.bar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.hxw.file.actions.R;
-import com.hxw.file.actions.view.draw.DrawData;
+import com.hxw.file.actions.view.chart.ChartData;
 
 import java.util.List;
 
@@ -35,14 +35,14 @@ public class BarView extends View {
     private BarStyle mBarStyle;
 
     private Paint mPaint;
-    private List<DrawData> mBarDataList;
+    private List<ChartData> mBarDataList;
     private int mMaxCount;
 
-    public void setBarDataList(List<DrawData> barDataList) {
+    public void setBarDataList(List<ChartData> barDataList) {
         if (barDataList == null || barDataList.size() == 0) {
             return;
         }
-        for (DrawData pieData : barDataList) {
+        for (ChartData pieData : barDataList) {
             mMaxCount = Math.max(mMaxCount, pieData.count);
         }
         this.mBarDataList = barDataList;
@@ -134,7 +134,7 @@ public class BarView extends View {
         final float averageWidth = (float) mWidth / mBarDataList.size();
         final int barDataLength = mBarDataList.size();
         for (int i = 0; i < barDataLength; i++) {
-            final DrawData data = mBarDataList.get(i);
+            final ChartData data = mBarDataList.get(i);
             //每个条形图宽度中心点
             final float itemCentre = averageWidth * i + averageWidth / 2;
             //每个条形图高度
@@ -166,7 +166,7 @@ public class BarView extends View {
      * @param itemCentre    条形图宽度中心点
      * @param itemBarHeight 条形图高度
      */
-    private void drawTopHintText(Canvas canvas, DrawData data, float itemCentre, int itemBarHeight) {
+    private void drawTopHintText(Canvas canvas, ChartData data, float itemCentre, int itemBarHeight) {
         mPaint.setTextSize(mBarStyle.topTextSize);
         mPaint.setColor(mBarStyle.topTextColor);
         final String hint = String.valueOf(data.count);
@@ -184,7 +184,7 @@ public class BarView extends View {
      * @param itemCentre    条形图宽度中心点
      * @param itemBarHeight 条形图高度
      */
-    private void drawBar(Canvas canvas, DrawData data, float itemCentre, int itemBarHeight) {
+    private void drawBar(Canvas canvas, ChartData data, float itemCentre, int itemBarHeight) {
         //每个条形图颜色
         mPaint.setColor(Color.parseColor(data.color));
         //画条形图
@@ -205,7 +205,7 @@ public class BarView extends View {
      * @param data       绘制内容
      * @param itemCentre 条形图宽度中心点
      */
-    private void drawBottomHintText(Canvas canvas, DrawData data, float itemCentre) {
+    private void drawBottomHintText(Canvas canvas, ChartData data, float itemCentre) {
         mPaint.setTextSize(mBarStyle.bottomTextSize);
         mPaint.setColor(mBarStyle.bottomTextColor);
         final String hint = String.valueOf(data.name);

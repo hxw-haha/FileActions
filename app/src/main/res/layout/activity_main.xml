@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:text="文件下载" />
 
-        <com.hxw.file.actions.view.draw.pie.PieWarpLinearView
+        <com.hxw.file.actions.view.chart.pie.PieWarpLinearView
             android:id="@+id/pie_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,7 +38,7 @@
             app:pie_wl_title_size="16sp"
             app:pie_wl_vertical_space="5dp" />
 
-        <com.hxw.file.actions.view.draw.bar.BarView
+        <com.hxw.file.actions.view.chart.bar.BarView
             android:id="@+id/bar_view"
             android:layout_width="match_parent"
             android:layout_height="180dp"

@@ -1,4 +1,4 @@
-package com.hxw.file.actions.view.draw.pie;
+package com.hxw.file.actions.view.chart.pie;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,14 +7,13 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.hxw.file.actions.R;
-import com.hxw.file.actions.view.draw.DrawData;
+import com.hxw.file.actions.view.chart.ChartData;
 import com.hxw.file.actions.view.WarpLinearLayout;
 
 import java.util.ArrayList;
@@ -28,12 +27,12 @@ import java.util.List;
  * <p>版本号：1</p>
  */
 public class PieWarpLinearView extends LinearLayout {
-    private List<DrawData> mPieDataList = new ArrayList<>();
+    private List<ChartData> mPieDataList = new ArrayList<>();
     private PieView mPieView;
     private WarpLinearLayout mWarpLayout;
     private PieWarpStyle mPieStyle;
 
-    public void setPieDataList(List<DrawData> pieDataList) {
+    public void setPieDataList(List<ChartData> pieDataList) {
         if (pieDataList == null || pieDataList.size() == 0) {
             return;
         }
@@ -45,12 +44,12 @@ public class PieWarpLinearView extends LinearLayout {
         notifyWarpLinearLayout(pieDataList);
     }
 
-    private void notifyWarpLinearLayout(List<DrawData> pieDataList) {
+    private void notifyWarpLinearLayout(List<ChartData> pieDataList) {
         if (pieDataList == null || pieDataList.size() == 0) {
             return;
         }
         mWarpLayout.removeAllViewsInLayout();
-        for (DrawData data : pieDataList) {
+        for (ChartData data : pieDataList) {
             final View itemRootView = LayoutInflater.from(getContext())
                     .inflate(R.layout.layout_pie_warp_linear_view_item, null);
             final View color = itemRootView.findViewById(R.id.hint_color_view);

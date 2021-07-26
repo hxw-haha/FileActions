@@ -1,4 +1,4 @@
-package com.hxw.file.actions.view.draw;
+package com.hxw.file.actions.view.chart;
 
 /**
  * <p>文件描述：</p>
@@ -7,7 +7,7 @@ package com.hxw.file.actions.view.draw;
  * <p>更改时间：2021/7/12</p>
  * <p>版本号：1</p>
  */
-public class DrawData {
+public class ChartData {
     public String name;
     public String color;
     public int count;
