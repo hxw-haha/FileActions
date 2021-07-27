@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#5FADEC</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#7E7E7D</item>
+        <item name="colorAccent">#ACACA6</item>
         <item name="windowNoTitle">true</item>
     </style>
 
@@ -63,4 +63,22 @@
         <attr name="pie_wl_horizontal_space" format="dimension" />
         <attr name="pie_wl_vertical_space" format="dimension" />
     </declare-styleable>
+
+    <!-- 垂直方向的虚线 -->
+    <declare-styleable name="DividerView">
+        <!-- 虚线颜色 -->
+        <attr name="divider_line_color" format="color" />
+        <!-- 虚线宽度 -->
+        <attr name="dashThickness" format="dimension" />
+        <!-- 虚线dash宽度 -->
+        <attr name="dashLength" format="dimension" />
+        <!-- 虚线dash间隔 -->
+        <attr name="dashGap" format="dimension" />
+        <!-- 虚线朝向 -->
+        <attr name="divider_orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
 </resources>

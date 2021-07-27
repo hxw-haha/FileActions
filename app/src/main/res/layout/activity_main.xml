@@ -31,7 +31,7 @@
         <com.hxw.file.actions.view.chart.pie.PieWarpLinearView
             android:id="@+id/pie_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="visible"
             app:pie_wl_height="140dp"
             app:pie_wl_horizontal_space="20dp"
@@ -47,6 +47,11 @@
             app:bar_b_text_size="12sp"
             app:bar_item_width="12sp"
             app:bar_t_text_size="9sp" />
+
+        <com.hxw.file.actions.view.stepview.dashed.DashedStepView
+            android:id="@+id/dashed_step_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>

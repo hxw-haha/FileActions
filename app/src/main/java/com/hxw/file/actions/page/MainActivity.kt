@@ -7,6 +7,7 @@ import com.hxw.file.actions.databinding.ActivityMainBinding
 import com.hxw.file.actions.page.download.DownloadActivity
 import com.hxw.file.actions.page.upload.UploadActivity
 import com.hxw.file.actions.view.chart.ChartData
+import com.hxw.file.actions.view.stepview.dashed.DashedData
 
 class MainActivity : DefaultActivity() {
     private lateinit var mBinding: ActivityMainBinding
@@ -55,7 +56,37 @@ class MainActivity : DefaultActivity() {
 
         mBinding.barView.postDelayed({
             mBinding.barView.setBarDataList(list)
-        }, 200);
+        }, 200)
+
+        mBinding.dashedStepView.postDelayed({
+            val dashedList = ArrayList<DashedData>()
+            dashedList.add(DashedData().apply {
+                leftText = "繁忙窗口"
+                rightText = "繁忙队列"
+                isTitle = true
+            })
+            dashedList.add(DashedData().apply {
+                leftText = "窗口1"
+                rightText = "队列1"
+            })
+            dashedList.add(DashedData().apply {
+                leftText = "窗口2"
+                rightText = "队列2"
+            })
+            dashedList.add(DashedData().apply {
+                leftText = "窗口3"
+                rightText = "队列3"
+            })
+            dashedList.add(DashedData().apply {
+                leftText = "窗口3"
+                rightText = "队列3"
+            })
+            dashedList.add(DashedData().apply {
+                leftText = "窗口4"
+                rightText = "队列4"
+            })
+            mBinding.dashedStepView.setDashedDataList(dashedList)
+        }, 200)
     }
 
     override fun initListener() {
