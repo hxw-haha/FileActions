@@ -8,7 +8,16 @@ package com.hxw.file.actions.view.chart;
  * <p>版本号：1</p>
  */
 public class ChartData {
+    public ChartData() {
+    }
+
+    public ChartData(String name, String color, float count) {
+        this.name = name;
+        this.color = color;
+        this.count = count;
+    }
+
     public String name;
     public String color;
-    public int count;
+    public float count;
 }

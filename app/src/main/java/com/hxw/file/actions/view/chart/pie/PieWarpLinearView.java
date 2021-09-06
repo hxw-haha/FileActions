@@ -84,10 +84,10 @@ public class PieWarpLinearView extends LinearLayout {
     }
 
     private void initTypedArrayData(Context context, AttributeSet attrs) {
-        final int defaultTextColor = Color.parseColor("#7E7E7D");
+        final int defaultTextColor = Color.parseColor("#666666");
         mPieStyle = new PieWarpStyle();
         final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PieWarpLinearView);
-        mPieStyle.pieHeight = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_height, sp2px(180));
+        mPieStyle.pieHeight = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_height, sp2px(150));
         mPieStyle.titleSize = array.getDimensionPixelSize(R.styleable.PieWarpLinearView_pie_wl_title_size, sp2px(12));
         mPieStyle.titleColor = array.getColor(R.styleable.PieWarpLinearView_pie_wl_title_color, defaultTextColor);
         mPieStyle.gravity = array.getInt(R.styleable.PieWarpLinearView_pie_wl_gravity, 1);

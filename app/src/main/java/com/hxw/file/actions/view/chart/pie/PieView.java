@@ -23,7 +23,6 @@ import java.util.List;
  * <p>版本号：1</p>
  */
 public class PieView extends View {
-    private static final String[] DEFAULT_COLOR = {"#333", "#568", "#456", "#890"};
     /**
      * 圆默认半径
      */
@@ -32,7 +31,7 @@ public class PieView extends View {
     private Paint mPaint;
 
     private List<ChartData> mPieDataList;
-    private int mSumCount = 0;
+    private float mSumCount = 0;
 
     public void setPieDataList(List<ChartData> pieDataList) {
         if (pieDataList == null || pieDataList.size() == 0) {
@@ -119,5 +118,4 @@ public class PieView extends View {
             firstAngle += divideAngle;
         }
     }
-
 }

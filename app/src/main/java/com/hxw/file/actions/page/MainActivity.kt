@@ -26,27 +26,27 @@ class MainActivity : DefaultActivity() {
         val list = ArrayList<ChartData>()
         list.add(ChartData().apply {
             color = "#6200EE"
-            count = 9
+            count = 9f
             name = "我要存款"
         })
         list.add(ChartData().apply {
             color = "#EC407A"
-            count = 20
+            count = 20f
             name = "我要取钱"
         })
         list.add(ChartData().apply {
             color = "#03DAC5"
-            count = 30
+            count = 30f
             name = "信用卡申请"
         })
         list.add(ChartData().apply {
             color = "#ADB657"
-            count = 20
+            count = 20f
             name = "现金业务"
         })
         list.add(ChartData().apply {
             color = "#E67451"
-            count = 100
+            count = 100f
             name = "鑫易存单"
         })
 

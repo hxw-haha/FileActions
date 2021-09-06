@@ -64,13 +64,13 @@ public class PieLinearView extends LinearLayout {
     }
 
     private void initTypedArrayData(Context context, AttributeSet attrs) {
-        final int defaultTextColor = Color.parseColor("#7E7E7D");
+        final int defaultTextColor = Color.parseColor("#666666");
         mPieStyle = new PieLinearStyle();
         final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PieLinearView);
-        mPieStyle.pieHeight = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_height, sp2px(180));
-        mPieStyle.titleSize = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_title_size, sp2px(12));
+        mPieStyle.pieHeight = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_height, sp2px(150));
+        mPieStyle.titleSize = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_title_size, sp2px(15));
         mPieStyle.titleColor = array.getColor(R.styleable.PieLinearView_pie_l_title_color, defaultTextColor);
-        mPieStyle.scaleSize = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_scale_size, sp2px(12));
+        mPieStyle.scaleSize = array.getDimensionPixelSize(R.styleable.PieLinearView_pie_l_scale_size, sp2px(15));
         mPieStyle.scaleColor = array.getColor(R.styleable.PieLinearView_pie_l_scale_color, defaultTextColor);
         array.recycle();
     }

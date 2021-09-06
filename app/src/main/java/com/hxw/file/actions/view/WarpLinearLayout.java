@@ -8,7 +8,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.hxw.file.actions.R;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class WarpLinearLayout extends ViewGroup {
         int with = 0;
         int height;
         int childCount = getChildCount();
-        // 用于对子View大小的测量
+        // 在调用childView。getMeasre之前必须先调用该行代码，用于对子View大小的测量
         measureChildren(widthMeasureSpec, heightMeasureSpec);
         // 计算宽度
         switch (withMode) {
@@ -69,6 +68,7 @@ public class WarpLinearLayout extends ViewGroup {
                 }
                 with += getPaddingLeft() + getPaddingRight();
                 break;
+            case MeasureSpec.EXACTLY:
             default:
                 with = withSize;
                 break;
@@ -76,6 +76,8 @@ public class WarpLinearLayout extends ViewGroup {
         }
         // 根据计算出的宽度，计算出所需要的行数
         WarpLine warpLine = new WarpLine();
+        // 不能够在定义属性时初始化，因为onMeasure方法会多次调用
+        mWarpLineGroup = new ArrayList<WarpLine>();
         for (int i = 0; i < childCount; i++) {
             if (warpLine.lineWidth + getChildAt(i).getMeasuredWidth() + mType.horizontal_Space > with) {
                 if (warpLine.lineView.size() == 0) {
@@ -127,31 +129,20 @@ public class WarpLinearLayout extends ViewGroup {
             int lastWidth = getMeasuredWidth() - warpLine.lineWidth;
             for (int j = 0; j < warpLine.lineView.size(); j++) {
                 View view = warpLine.lineView.get(j);
-                if (isFull()) {//需要充满当前行时
-                    view.layout(left,
-                            t,
-                            left + view.getMeasuredWidth() + lastWidth / warpLine.lineView.size(),
-                            t + view.getMeasuredHeight());
+                if (isFull()) {
+                    //需要充满当前行时
+                    view.layout(left, t, left + view.getMeasuredWidth() + lastWidth / warpLine.lineView.size(), t + view.getMeasuredHeight());
                     left += view.getMeasuredWidth() + mType.horizontal_Space + lastWidth / warpLine.lineView.size();
                 } else {
                     switch (getGravity()) {
                         case Gravity.RIGHT://右对齐
-                            view.layout(left + lastWidth,
-                                    t,
-                                    left + lastWidth + view.getMeasuredWidth(),
-                                    t + view.getMeasuredHeight());
+                            view.layout(left + lastWidth, t, left + lastWidth + view.getMeasuredWidth(), t + view.getMeasuredHeight());
                             break;
                         case Gravity.CENTER://居中对齐
-                            view.layout(left + lastWidth / 2,
-                                    t,
-                                    left + lastWidth / 2 + view.getMeasuredWidth(),
-                                    t + view.getMeasuredHeight());
+                            view.layout(left + lastWidth / 2, t, left + lastWidth / 2 + view.getMeasuredWidth(), t + view.getMeasuredHeight());
                             break;
                         default://左对齐
-                            view.layout(left,
-                                    t,
-                                    left + view.getMeasuredWidth(),
-                                    t + view.getMeasuredHeight());
+                            view.layout(left, t, left + view.getMeasuredWidth(), t + view.getMeasuredHeight());
                             break;
                     }
                     left += view.getMeasuredWidth() + mType.horizontal_Space;
@@ -212,8 +203,8 @@ public class WarpLinearLayout extends ViewGroup {
             }
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WarpLinearLayout);
             gravity = typedArray.getInt(R.styleable.WarpLinearLayout_gravity, gravity);
-            horizontal_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_horizontal_Space, sp2px(context,8));
-            vertical_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_vertical_Space, sp2px(context,8));
+            horizontal_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_horizontal_Space, sp2px(context, 8));
+            vertical_Space = typedArray.getDimensionPixelSize(R.styleable.WarpLinearLayout_vertical_Space, sp2px(context, 8));
             isFull = typedArray.getBoolean(R.styleable.WarpLinearLayout_isFull, isFull);
             typedArray.recycle();
         }
@@ -265,4 +256,5 @@ public class WarpLinearLayout extends ViewGroup {
         public final static int CENTER = 2;
     }
 }
+
 
